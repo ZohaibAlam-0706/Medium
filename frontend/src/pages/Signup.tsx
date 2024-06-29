@@ -15,9 +15,7 @@ export const Signup = () => {
     const navigate = useNavigate();
     async function sendRequest(){
         try{
-            const res = await axios.post(`${BACKEND_URL}/api/v1/user/signup`,{
-                data: signUpInputs
-            });
+            const res = await axios.post(`${BACKEND_URL}/api/v1/user/signup`,signUpInputs);
             const jwt = res.data;
             localStorage.setItem('token', jwt);
             navigate('/blogs');

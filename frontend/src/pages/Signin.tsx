@@ -1,7 +1,9 @@
 import { useState } from "react"
 import { Quote } from "../components/Sign_Quote"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SigninInput } from "@zohaib0706/medium-common";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 
 export const Signin = () => {
@@ -9,6 +11,18 @@ export const Signin = () => {
         email: "",
         password: ""
     });
+    const [warning, setWarning] = useState(false);
+    const navigate = useNavigate();
+    async function sendRequest(){
+        try{
+            const res = await axios.post(`${BACKEND_URL}/api/v1/user/signin`,signinInputs);
+            const jwt = res.data;
+            localStorage.setItem('token', jwt);
+            navigate('/blogs');
+        }catch(e){
+            setWarning(true);
+        }
+    }
 
     return <div className="grid grid-cols-1 lg:grid-cols-2">
         <div className="flex justify-center align-center mt-12">
@@ -46,8 +60,11 @@ export const Signin = () => {
                         }))
                     }} />
                 </div>
+                {warning? <div className="flex justify-center text-red-700">
+                    Incorrect Inputs
+                </div> : <div></div>}
                 <div className="w-full mt-8">
-                    <button className="bg-black text-white rounded-lg text-xl w-full py-2"> Sign Up</button>
+                    <button className="bg-black text-white rounded-lg text-xl w-full py-2" onClick={sendRequest}> Sign Up</button>
                 </div>
             </div>
         </div>
