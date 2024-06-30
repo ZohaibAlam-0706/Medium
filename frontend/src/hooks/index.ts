@@ -16,7 +16,7 @@ export const useBlogs = () => {
                 setBlogs(res.data.blogs);
                 setLoading(false);
             })
-    }, [blogs]);
+    }, []);
     
     return {loading, blogs}
 } 
@@ -49,7 +49,7 @@ export const useBlog = ({ id }: { id: string }): UseBlogReturn => {
                 setBlog(res.data.blog);
                 setLoading(false);
             })
-    }, [id]);
+    }, []);
     
     return {loading, blog}
 }

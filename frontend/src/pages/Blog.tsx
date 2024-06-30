@@ -17,12 +17,12 @@ export const Blog = () => {
             <TopBar authorName={"Zohaib"} post={false} />
         </div>
         <div className="grid grid-cols-10 mt-10">
-            <div className="col-span-10 flex justify-center lg:col-span-7">
+            <div className="col-span-10 flex lg:col-span-7">
                 <div className="ml-9">
                     <div className="font-sans font-light flex justify-start text-sm text-gray-500">
                         READING | BRAIN | LIFE
                     </div>
-                    <div className="text-5xl font-bold mt-4 w-9/12">
+                    <div className="text-5xl font-bold mt-4 w-full">
                         {blog?.title}
                     </div>
                     <div className="mt-3 ml-2 text-slate-500 font-light">
