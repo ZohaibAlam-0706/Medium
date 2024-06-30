@@ -1,18 +1,26 @@
-
+import { useNavigate } from "react-router-dom";
 
 interface BlogCardProps {
+    id: string
     authorName: string;
     title: string;
     content: string;
     publishedDate: string;
 }
 export const BlogCard = ({
+    id,
     authorName,
     title,
     content,
     publishedDate
 }: BlogCardProps) => {
-    return <div className="ml-6 mt-5 flex justify-center w-full">
+
+    const navigate = useNavigate();
+    function goToBlog(){
+        navigate(`/blog/${id}`);
+    }
+
+    return <div className="mt-5 flex justify-center w-full">
         <div className="w-5/12">
             <div className="flex">
                 <div className="relative inline-flex items-center justify-center w-6 h-6 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
@@ -28,7 +36,7 @@ export const BlogCard = ({
                     {publishedDate}
                 </div>
             </div>
-            <div className="cursor-pointer">
+            <div className="cursor-pointer" onClick={goToBlog}>
                 <div className="font-bold text-2xl mt-4">
                     {title}
                 </div>
