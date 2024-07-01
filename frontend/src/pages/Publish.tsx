@@ -37,7 +37,7 @@ export const Publish = () => {
 
     return <div>
         <div>
-            <TopBar authorName="Zohaib" post={true}/>
+            <TopBar post={true}/>
         </div>
         <div>            
             <div className="w-full flex justify-center">

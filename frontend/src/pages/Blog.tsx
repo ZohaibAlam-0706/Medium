@@ -24,7 +24,7 @@ export const Blog = () => {
 
     return <div>
         <div>
-            <TopBar authorName={"Zohaib"} post={false} />
+            <TopBar post={false} />
         </div>
         <div className="grid grid-cols-10 mt-10">
             <div className="col-span-10 flex lg:col-span-7">

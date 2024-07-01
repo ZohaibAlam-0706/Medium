@@ -18,7 +18,7 @@ export const Blogs = () => {
     if(loading){
         return <div>
             <div>
-                <TopBar authorName={"Peter V"} post={false} />
+                <TopBar post={false} />
             </div>
             <div className="flex justify-center items-center h-screen">
                 <div
@@ -34,7 +34,7 @@ export const Blogs = () => {
 
     return <div>
         <div>
-            <TopBar authorName={"Peter V"} post={false} />
+            <TopBar post={false} />
         </div>
         <div>
             {blogs.map((blog: {id: string ,author: {username: string}, title: string, content: string}) => {

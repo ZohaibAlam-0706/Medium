@@ -4,10 +4,9 @@ import { useNavigate } from "react-router-dom"
 import { BACKEND_URL } from "../config";
 
 type author = {
-    authorName: string,
     post: boolean
 }
-export const TopBar = ({authorName, post} : author) => {
+export const TopBar = ({post} : author) => {
     const [currentUser, setCurrentUser] = useState("");
     const [showBar, setShowBar] = useState(false);
     const navigate = useNavigate();
