@@ -71,7 +71,7 @@ export const Signin = () => {
                     Incorrect Inputs
                 </div> : <div></div>}
                 <div className="w-full mt-8">
-                    <button className="bg-black text-white rounded-lg text-xl w-full py-2" onClick={sendRequest}> Sign Up</button>
+                    <button className="bg-black text-white rounded-lg text-xl w-full py-2" onClick={sendRequest}> Sign In</button>
                 </div>
             </div>
         </div>
