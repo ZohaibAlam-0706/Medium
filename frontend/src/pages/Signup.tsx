@@ -35,7 +35,7 @@ export const Signup = () => {
                         Already have an account? 
                     </div>
                     <div className="underline cursor-pointer ml-2">
-                        <Link to={'/signin'}>Login</Link>
+                        <Link to={'/'}>Login</Link>
                     </div>
                 </div>
                 <div className="mt-6 w-full">

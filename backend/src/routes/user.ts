@@ -11,6 +11,35 @@ export const userRouter = new Hono<{
     }
 }>();
 
+userRouter.get('/data', async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate())
+  
+  try{
+      const header = c.req.header("authorization") || "";
+      const token = header.split(" ")[1];
+      const res = await verify(token, c.env.JWT_SECRET);
+      if(res.id){
+        console.log(res.id);
+        //@ts-ignore
+        const  id : string  = res.id 
+        const username = await prisma.user.findUnique({
+          where: {
+            id
+          },
+          select: {
+            username: true
+          }
+        })
+        return c.json({username});
+      }
+    }catch(e){
+      c.status(403);
+      return c.json({message: "Error while finding the user data"});
+    }
+    
+  })
 userRouter.post('/signup', async (c) => {
   const body = await c.req.json();
   const { success } = signupInput.safeParse(body);

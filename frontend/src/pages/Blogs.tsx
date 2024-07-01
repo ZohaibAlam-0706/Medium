@@ -1,9 +1,19 @@
+import { useNavigate } from "react-router-dom";
 import { BlogCard } from "../components/BlogCard"
 import { TopBar } from "../components/TopBar"
 import { useBlogs } from "../hooks/index";
+import { useEffect } from "react";
 
 export const Blogs = () => {
     const {loading, blogs} = useBlogs();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+        navigate('/');
+        }
+    },[])
 
     if(loading){
         return <div>

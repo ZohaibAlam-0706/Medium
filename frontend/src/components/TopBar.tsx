@@ -1,11 +1,17 @@
+import axios from "axios";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom"
+import { BACKEND_URL } from "../config";
 
 type author = {
     authorName: string,
     post: boolean
 }
 export const TopBar = ({authorName, post} : author) => {
+    const [currentUser, setCurrentUser] = useState("");
+    const [showBar, setShowBar] = useState(false);
     const navigate = useNavigate();
+    const barRef = useRef<HTMLDivElement>(null);
     function goToHome(){
         navigate('/blogs');
     }
@@ -14,7 +20,43 @@ export const TopBar = ({authorName, post} : author) => {
         navigate('/publish');
     }
 
-    return <div>
+    function settingBar(){
+        if(showBar) setShowBar(false);
+        else setShowBar(true);
+    };
+    function logout(){
+        localStorage.removeItem('token');
+        navigate('/');
+    }
+    
+    useEffect(() => {
+        // Function to handle clicks outside of search box and suggestion box
+        const handleClickOutside = (event: MouseEvent) => {
+            if (barRef.current && !barRef.current.contains(event.target as Node)) {
+              setShowBar(false);
+            }
+          };
+      
+        // Add event listener when component mounts
+        window.addEventListener("click", handleClickOutside, true);
+    
+        // Remove event listener when component unmounts
+        return () => {
+          window.removeEventListener("click", handleClickOutside, true);
+        };
+      }, []);
+
+    useEffect(() => {
+        axios.get(`${BACKEND_URL}/api/v1/user/data`,{
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('token')
+            }
+        }).then(res => {
+            setCurrentUser(res.data.username.username);
+        })
+    },[])
+
+    return <div className="relative">
         <div className="h-12 flex justify-between border-b-2">
             <div className="flex">
                 <div onClick={goToHome} className="ml-7 text-3xl font-bold text-purple-900 cursor-pointer mt-1">
@@ -32,9 +74,18 @@ export const TopBar = ({authorName, post} : author) => {
                     <div className="ml-3 mr-5 mt-3 text-lg">Write</div>
                 </div>
                 }
-                <div className="cursor-pointer relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-gray-100 rounded-full dark:bg-black mt-1.5 mr-7">
-                    <span className="font-medium text-gray-600 dark:text-gray-300">{authorName[0]}</span>
+                <div onClick={settingBar} className="cursor-pointer relative inline-flex items-center justify-center w-9 h-9 overflow-hidden bg-gray-100 rounded-full dark:bg-black mt-1.5 mr-7">
+                    <span className="font-medium text-gray-600 dark:text-gray-300">{currentUser[0]}</span>
                 </div>
+                {showBar && (
+                    <div className=" absolute top-full right-0" ref={barRef}>
+                        <div className="bg-white border border-gray-300 rounded-md shadow z-10 p-0.5">
+                            <div onClick={logout} className="py-1 cursor-pointer text-center rounded-md mt-1.5 text-lg w-24 hover:bg-purple-900 hover:text-white mb-1">
+                                Log Out   
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     </div>

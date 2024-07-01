@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TopBar } from "../components/TopBar";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
@@ -27,6 +27,14 @@ export const Publish = () => {
             navigate('/blogs');
         }
     }
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+        navigate('/');
+        }
+    },[])
+
     return <div>
         <div>
             <TopBar authorName="Zohaib" post={true}/>

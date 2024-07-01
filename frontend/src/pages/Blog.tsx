@@ -1,9 +1,17 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useBlog } from "../hooks"
 import { TopBar } from "../components/TopBar";
+import { useEffect } from "react";
 
 // atom families / selector Families
 export const Blog = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+        navigate('/');
+        }
+    },[])
     const { id } = useParams();
     const blogid = id || "";
     const { loading, blog } = useBlog({ id: blogid });
@@ -12,6 +20,8 @@ export const Blog = () => {
             Loading....
         </div>
     }
+
+
     return <div>
         <div>
             <TopBar authorName={"Zohaib"} post={false} />

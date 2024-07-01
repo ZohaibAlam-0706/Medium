@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Quote } from "../components/Sign_Quote"
 import { Link, useNavigate } from "react-router-dom";
 import { SigninInput } from "@zohaib0706/medium-common";
@@ -23,6 +23,13 @@ export const Signin = () => {
             setWarning(true);
         }
     }
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if(token){
+            navigate('/blogs');
+        }
+    },[])    
 
     return <div className="grid grid-cols-1 lg:grid-cols-2">
         <div className="flex justify-center align-center mt-12">
